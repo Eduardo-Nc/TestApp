@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useId} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -25,12 +26,15 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import VideoModule from './VideoModule';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -62,6 +66,16 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const playVideo = () => {
+    VideoModule.playVideo(
+      'https://inmobiliaria-kolelkab.s3.us-east-2.amazonaws.com/PRUEBA.mp4',
+    );
+  };
+
+  const stopVideo = () => {
+    VideoModule.stopVideo();
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -77,7 +91,7 @@ function App(): React.JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            Edit <Text style={styles.highlight}>App.tsx1</Text> to change this
             screen and then come back to see your edits.
           </Section>
           <Section title="See Your Changes">
@@ -91,6 +105,9 @@ function App(): React.JSX.Element {
           </Section>
           <LearnMoreLinks />
         </View>
+
+        <Button title="Play Video" onPress={playVideo} />
+        <Button title="Stop Video" onPress={stopVideo} />
       </ScrollView>
     </SafeAreaView>
   );
